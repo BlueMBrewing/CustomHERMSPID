@@ -1,0 +1,4 @@
+name: cbpi4-PIDHermsMashDelta
+version: 0.1.0
+description: HERMS Kettle Logic - Mash PID control with HLT/Mash delta safety cutoff
+author: Generated for private use, based on PiBrewing/cbpi4-PIDHerms
