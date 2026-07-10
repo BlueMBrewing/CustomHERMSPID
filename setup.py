@@ -18,5 +18,5 @@ setup(
     packages=["cbpi4-PIDHermsMashDelta"],
     long_description=long_description,
     long_description_content_type="text/markdown",
-    python_requires=">=3.9",
+    python_requires=">=3.9,<3.12",
 )

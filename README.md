@@ -2,7 +2,13 @@
 
 A CraftBeerPi4 Kettle Logic plugin for HERMS systems, based on the design of
 [PiBrewing/cbpi4-PIDHerms](https://github.com/PiBrewing/cbpi4-PIDHerms), rewritten
-to run on Python 3.13 (Raspberry Pi 5) with no external PID dependency.
+to run on Python 3.11 with no external PID dependency.
+
+> Note: this code has no version-specific syntax — the same file also runs
+> unmodified on Python 3.13. This build just pins packaging metadata
+> (`python_requires`) to the 3.11 line and adjusts the notes below in case
+> you're on an older Pi image (Bullseye/Bookworm on a Pi 3/4) rather than a
+> fresh Pi 5 install.
 
 ## How it works
 
@@ -68,21 +74,24 @@ or edit a Kettle, set:
 ...and fill in the plugin properties (P/I/D, HLT_Sensor, DeltaTemp, etc.) in
 the Kettle Logic config panel.
 
-## Raspberry Pi 5 / Python 3.13 notes
+## Python 3.11 / Raspberry Pi notes
 
 - This plugin itself has **no external dependencies** beyond CBPi4 core
   (`asyncio`, `logging` only), so there's nothing extra to install for the
-  logic to run under Python 3.13.
-- The Pi 5 uses a different GPIO chip (RP1) than earlier Pi models. The
-  classic `RPi.GPIO` library **does not work on Pi 5**. If your *actor* or
-  *sensor* plugins (e.g. GPIO relay actors, DS18B20/OneWire, PT100/1000
-  boards) depend on `RPi.GPIO`, install `rpi-lgpio` (a drop-in replacement)
-  or switch to plugins/backends built on `lgpio` / `gpiozero` with the
-  `lgpio` pin factory. This is unrelated to this Kettle Logic plugin, but
-  it's the most common thing that breaks a fresh CBPi4-on-Pi5 setup.
-- Make sure CBPi4 core itself is a recent enough version to run cleanly on
-  Python 3.13 — check the CBPi4 release notes if you hit `asyncio` deprecation
-  errors at startup.
+  logic to run under Python 3.11.
+- Python 3.11 is the default interpreter on Raspberry Pi OS Bookworm (Pi 3/4/5),
+  so this is the most common environment for a stock CBPi4 install — if you
+  installed CBPi4 with `pipx` or a system-wide `pip3` on a Bookworm image,
+  you're almost certainly already on 3.11.
+- If you're on a **Pi 5**: it uses a different GPIO chip (RP1) than earlier
+  Pi models, and the classic `RPi.GPIO` library **does not work on Pi 5**.
+  If your *actor* or *sensor* plugins (e.g. GPIO relay actors, DS18B20/OneWire,
+  PT100/1000 boards) depend on `RPi.GPIO`, install `rpi-lgpio` (a drop-in
+  replacement) or switch to plugins/backends built on `lgpio` / `gpiozero`
+  with the `lgpio` pin factory. This is unrelated to this Kettle Logic
+  plugin, but it's the most common thing that breaks a fresh CBPi4 setup.
+- If you're on a **Pi 3/4**, `RPi.GPIO` works normally under 3.11 — no
+  changes needed there.
 
 ## Safety note
 
